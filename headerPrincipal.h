@@ -5,14 +5,13 @@
 #include <set>
 using namespace std;
 
-struct fecha {
+struct FECHA {
     int año;
     int mes;
     int dia;
     };
 
-vector<string> separar_input(string input);
-vector<int> stovector_fecha (string fecha);
+vector<int> stovector_fecha(string fecha);
 
 bool comprobar_mes(int mes);
 bool comprobar_dia(int dia);

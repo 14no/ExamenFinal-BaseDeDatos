@@ -7,51 +7,68 @@ struct FECHA {
     int dia;
     };
 
-int main(){
-    string input;
-    getline(cin, input);
-    
-    vector<string> vs = separar_input(input);
-    
-    string comando = vs[0];
-    if(comando != "Add" || comando != "Del" || comando != "Find" || comando != "Print"){
-        cout << "Unknown command: " << comando << endl;
-    }
-    
-    string fecha = vs[1]; 
-    vector<int> vi = stovector_fecha(fecha);
-    
-    if (vi.size() != 3) {
-        cout << "Wrong Date Format: "<< fecha << endl;
-    }
-
+int main() {
+    string comando, fecha, evento;
+    map<string, set<string>> FechaEventos;
     FECHA f;
-    f.año = vi[0];
-    f.mes = vi[1];
-    f.dia = vi[2];
+    
+    while(true){
+    cin >> comando;
+    if(comando == "exit") break;
+    if(comando.empty()) continue;
+    if(comando == "Print"){
+        print(FechaEventos);
+        continue;
+    }
+    
+    if(comando != "Add" && comando != "Del" && comando != "Find" && comando != "Print"){
+        cout << "Unknown command: " << comando << endl;
+        continue;
+    }
+    
+    cin >> fecha;
+    vector<int> vi = stovector_fecha(fecha);
+    if(vi.size() != 3){
+        cout << "Wrong date format: " << fecha << endl;
+        continue;
+    }
+    
+        f.año = vi[0];
+        f.mes = vi[1];
+        f.dia = vi[2];
     
     if(comprobar_mes(f.mes) == false) {
         cout << "Month value is invalid: " + to_string(f.mes) << endl;
+        continue;
     }
     if(comprobar_dia(f.dia) == false) {
         cout << "Day value is invalid: " + to_string(f.dia) << endl;
-    }
-
-    string evento = vs[2];
-    
-    map<string, set<string>> eventos;
-
-    if (comando == "Add") {
-        add(eventos, fecha, evento);
-    } else if (comando == "Del") {
-        if (!evento.empty()) { 
-            delOne(eventos, fecha, evento);
-        } else {
-            del(eventos, fecha);
+        continue;
         }
-    } else if (comando == "Print") {
-        print(eventos);
+    
+    cin >> evento;
+    if(comando == "Add"){
+        add(fecha, evento, FechaEventos);
+    } else if(comando == "Del"){
+        if(!evento.empty()){
+            del_one(fecha, evento, FechaEventos);
+            /*if(FechaEventos[fecha].erase(evento)){
+                cout << "Deleted successfully" << endl;
+            } else {
+            cout << "Event not found" << endl;
+        }*/
+        } else {
+            del(fecha, FechaEventos); //Falta el mensaje
+        }
+    } else if(comando == "Find"){
+        if (FechaEventos.count(fecha) != 0) {
+                find(fecha, FechaEventos);
+            } else {
+                cout << "No existe" << endl;
+            } //se imprime despues del comando no después.
     }
-
+    
+    
+    }
     return 0;
 }

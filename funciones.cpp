@@ -1,24 +1,30 @@
 #include "headerPrincipal.h"
 
-void add(map<string, set<string>>& mapa, string sdate, string event) {
-    mapa[sdate].insert(event);
+void add(string fecha, string evento, map<string, set<string>>& FechaEventos){
+    FechaEventos[fecha].insert(evento);
 }
 
-void del(map<string, set<string>>& mapa, string fecha) {
-    mapa.erase(fecha);
-}
-
-void delOne(map<string, set<string>>& mapa, string fecha, string evento) {
-    if (mapa.count(fecha)) {
-        mapa[fecha].erase(evento);
-        if (mapa[fecha].empty()) {
-            mapa.erase(fecha);
+void del_one(string fecha, string evento, map<string, set<string>>& FechaEventos){
+    if(FechaEventos.count(fecha)){
+        if(FechaEventos[fecha].empty()){
+            FechaEventos.erase(fecha);
         }
+    } 
+}
+
+void del(string fecha, map<string, set<string>>& FechaEventos){
+    FechaEventos.erase(fecha);
+}
+
+void find(string fecha, map<string, set<string>>& FechaEventos){
+    set<string> eventos = FechaEventos[fecha];
+    for (const auto& e : eventos) {
+        cout << e << endl;
     }
 }
 
-void print(const map<string, set<string>>& mapa) {
-    for (const auto& item : mapa) {
+void print(const map<string, set<string>>& FechaEventos){
+    for (const auto& item : FechaEventos) {
         const set<string>& eventos = item.second;
         for (const auto& e : eventos) {
             cout << item.first << " : " << e << endl;

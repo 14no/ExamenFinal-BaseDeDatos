@@ -1,6 +1,7 @@
 #include "headerPrincipal.h"
 
-void add(map<string, set<string>>& mapa, string sdate, string event);
-void del(map<string, set<string>>& mapa, string fecha);
-void delOne(map<string, set<string>>& mapa, string fecha, string evento);
-void print(const map<string, set<string>>& mapa); 
+void add(string fecha, string evento, map<string, set<string>>& FechaEventos);
+void del_one(string fecha, string evento, map<string, set<string>>& FechaEventos);
+void del(string fecha, map<string, set<string>>& FechaEventos);
+void find(string fecha, map<string, set<string>>& FechaEventos);
+void print(const map<string, set<string>>& FechaEventos);
