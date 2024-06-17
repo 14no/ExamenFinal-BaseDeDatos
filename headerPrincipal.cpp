@@ -1,10 +1,39 @@
 #include "headerPrincipal.h"
 
+string format_fecha_print(FECHA fecha) {
+    string año;
+    if(fecha.año < 1000){
+        año = "0" + to_string(fecha.año);
+    }
+    if(fecha.año < 100){
+        año = "00" + to_string(fecha.año);
+    }
+    if(fecha.año < 10){
+        año = "000" + to_string(fecha.año);
+    } else {
+        año = to_string(fecha.año);
+    }
+    
+    string mes, dia;
+    if(fecha.mes < 10){
+        mes = "0" + to_string(fecha.mes);
+    } else {
+        mes = to_string(fecha.mes);
+    }
+
+    if(fecha.dia < 10){
+        dia = "0" + to_string(fecha.dia);
+    } else {
+        dia = to_string(fecha.dia);
+    }
+    string f = año + "-" + mes + "-" + dia ;
+    return f;
+}
+
 vector<int> stovector_fecha(string fecha){
     string s;
     vector<int> v;
     int counter_hypens = 0;
-    bool negative = false;
     for (int i = 0; i < fecha.size(); ++i) {
     if (fecha[i] == '-') {
     ++counter_hypens;
@@ -12,13 +41,11 @@ vector<int> stovector_fecha(string fecha){
         v.push_back(stoi(s));
         s = "";
     }
-    negative = true;
     } else if (fecha[i] == '+') {
         if (!s.empty()) {
             v.push_back(stoi(s));
             s = "";
         }
-    negative = false;
     } else {
         s += fecha[i];
     }

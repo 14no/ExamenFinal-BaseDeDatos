@@ -46,26 +46,23 @@ int main() {
         continue;
         }
     
+    fecha = format_fecha_print(f);
+
     cin >> evento;
     if(comando == "Add"){
         add(fecha, evento, FechaEventos);
     } else if(comando == "Del"){
         if(!evento.empty()){
             del_one(fecha, evento, FechaEventos);
-            /*if(FechaEventos[fecha].erase(evento)){
-                cout << "Deleted successfully" << endl;
-            } else {
-            cout << "Event not found" << endl;
-        }*/
         } else {
             del(fecha, FechaEventos); //Falta el mensaje
         }
     } else if(comando == "Find"){
         if (FechaEventos.count(fecha) != 0) {
-                find(fecha, FechaEventos);
-            } else {
-                cout << "No existe" << endl;
-            } //se imprime despues del comando no después.
+            find(fecha, FechaEventos);
+        } else {
+            cout << "No existe" << endl;
+        }
     }
     
     
