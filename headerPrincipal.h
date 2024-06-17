@@ -11,11 +11,8 @@ struct fecha {
     int dia;
     };
 
-vector<string> separarInput(string input);
-vector<int> stovectorFecha (string sdate);
+vector<string> separar_input(string input);
+vector<int> stovector_fecha (string fecha);
 
 bool comprobar_mes(int mes);
 bool comprobar_dia(int dia);
-
-void add(map<string, set<string>>& mapa, string sdate, string event);
-void print(const map<string, set<string>>& mapa); 

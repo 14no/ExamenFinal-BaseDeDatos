@@ -1,5 +1,7 @@
-#include "header1.h"
-struct fecha {
+#include "headerPrincipal.h"
+#include "funciones.h"
+
+struct FECHA {
     int año;
     int mes;
     int dia;
@@ -9,42 +11,45 @@ int main(){
     string input;
     getline(cin, input);
     
-    vector<string> vs = separarInput(input);
+    vector<string> vs = separar_input(input);
     
-string command = vs[0];
-    if(command != "Add" || command != "Del" || command != "Find" || command != "Print"){
-        cout << "Unknown command: " << command << endl;
+    string comando = vs[0];
+    if(comando != "Add" || comando != "Del" || comando != "Find" || comando != "Print"){
+        cout << "Unknown command: " << comando << endl;
     }
     
-string sdate = vs[1]; 
-    vector<int> vi = stovectorFecha(sdate);
+    string fecha = vs[1]; 
+    vector<int> vi = stovector_fecha(fecha);
     
     if (vi.size() != 3) {
-        cout << "Wrong Date Format: "<< sdate << endl;
+        cout << "Wrong Date Format: "<< fecha << endl;
     }
 
-    fecha date;
-    date.año = vi[0];
-    date.mes = vi[1];
-    date.dia = vi[2];
+    FECHA f;
+    f.año = vi[0];
+    f.mes = vi[1];
+    f.dia = vi[2];
     
-    if(comprobar_mes(date.mes) == false) {
-        cout << "Month value is invalid: " + to_string(date.mes) << endl;
+    if(comprobar_mes(f.mes) == false) {
+        cout << "Month value is invalid: " + to_string(f.mes) << endl;
     }
-    if(comprobar_dia(date.dia) == false) {
-        cout << "Day value is invalid: " + to_string(date.dia) << endl;
+    if(comprobar_dia(f.dia) == false) {
+        cout << "Day value is invalid: " + to_string(f.dia) << endl;
     }
 
-string event = vs[2];
+    string evento = vs[2];
     
     map<string, set<string>> eventos;
 
-    if (command == "Add") {
-        if (event.empty()) {
+    if (comando == "Add") {
+        add(eventos, fecha, evento);
+    } else if (comando == "Del") {
+        if (!evento.empty()) { 
+            delOne(eventos, fecha, evento);
+        } else {
+            del(eventos, fecha);
         }
-        add(eventos, sdate, event);
-    } 
-    if (command == "Print") {
+    } else if (comando == "Print") {
         print(eventos);
     }
 
