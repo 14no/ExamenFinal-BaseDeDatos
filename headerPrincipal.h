@@ -11,6 +11,7 @@ struct FECHA {
     int dia;
     };
 
+string format_fecha_print(FECHA fecha);
 vector<int> stovector_fecha(string fecha);
 
 bool comprobar_mes(int mes);

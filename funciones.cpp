@@ -6,10 +6,15 @@ void add(string fecha, string evento, map<string, set<string>>& FechaEventos){
 
 void del_one(string fecha, string evento, map<string, set<string>>& FechaEventos){
     if(FechaEventos.count(fecha)){
-        if(FechaEventos[fecha].empty()){
-            FechaEventos.erase(fecha);
-        }
-    } 
+        if(FechaEventos[fecha].erase(evento)){
+                cout << "Deleted successfully" << endl;
+            } 
+            if(FechaEventos[fecha].empty()){
+                FechaEventos.erase(fecha);
+            }
+    } else {
+        cout << "Event not found" << endl;
+    }
 }
 
 void del(string fecha, map<string, set<string>>& FechaEventos){
