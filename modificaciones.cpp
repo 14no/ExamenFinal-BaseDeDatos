@@ -3,68 +3,158 @@
 #include <map>
 #include <set>
 using namespace std;
-
 struct FECHA{
     int año;
     int mes;
     int dia;
 };
-int main(){
-    string comando, fecha, evento;
-    map<string, set<string>> mapa;
-    vector<string> comandos;
-    FECHA f;
+//variables globales:
+    vector<int> v_fecha; //porque se utiliza en la función validar fecha, pero también se necesita lo que guardo en los comandos
     
-    while(true){
-        cin >> comando;
-//exit para dejar de pedir lineas de comando en la entrada
-        if(comando == "exit") break;
-//para soportar lineas de entrada vacías
-        if(comando.empty()) continue; //¿el comando esta vacío? YES: vaya a repetir el while
-//Función PRINT
-        if(comando == "Print"){
-            comandos.push_back(comando);
-            continue;
-        }
-    
-        cin >> fecha;
-        vector<int> v_fecha;
+//funciones:
+bool validar_fecha(string& fecha);
+bool comprobar_mes(int mes);
+bool comprobar_dia(int dia);
 
-//En esta parte procesamos el AÑO, se hace un for para reescribirlo o determinar si el formato es incorrecto 
-        string s_año = ""; //para reescribir el año
-        int hy_año = 0; //para contar los guiones antes del año
-        int i_año = 0;
-        for(int i = 0; i < fecha.size(); ++i){
-            if(fecha[i] == '-'){ //¿el caracter donde nos encontramos es igual a '-'? YES: contar los guiones que hay antes del año
-                ++hy_año;
+vector<string> separar_input(string& input);
+
+int main() {
+    string input;
+    
+    string comando;
+    string fecha;
+    string evento;
+    vector<string> v_comandos;
+    map<string, set<string>> mapa;
+    
+while(true){
+    getline(cin, input);
+    if(input == "exit") break;
+    if(input.empty()) continue;
+//Separando lo ingresado según los espacios   
+    vector<string> v_input = separar_input(input);
+
+//Según el comando:    
+    comando = v_input[0];
+    if(comando == "Add"){
+        fecha = v_input[1];
+        if(!validar_fecha(fecha)){
+            break;
+        } v_fecha.clear();
+        
+        evento = v_input[2];
+        mapa[fecha].insert(evento); //se agrega el evento en la fecha
+        v_input.clear();
+    } else if(comando == "Find"){
+        v_comandos.push_back(comando);
+        fecha = v_input[1];
+        if(!validar_fecha(fecha)){
+            break;
+        } v_fecha.clear();
+        //función Find
+        v_input.clear();
+    } else if(comando == "Del"){
+        v_comandos.push_back(comando);
+        fecha = v_input[1];
+        if(!validar_fecha(fecha)){
+            break;
+        } v_fecha.clear();
+        
+        if(v_input.size() == 2){
+            //función Del
+        } else {
+            evento = v_input[2];
+            //función Del_one
+        }
+        v_input.clear();
+    } else if(comando == "Print"){
+        v_comandos.push_back(comando);
+        //funcion Print
+        v_input.clear();
+    } else {
+        cout << "Unknown command: " << comando << endl;
+        break;
+    }
+}
+    
+    cout << endl;
+    for(auto n : v_comandos){
+        cout << n << ", ";
+    }
+    //Para imprimir lo necesario después de haber sido ingresado "exit"    
+    cout << v_comandos.size() << endl; //el tamaño es 1 pero el indice es 0
+    for(int i = 0; i < v_comandos.size(); ++i){
+        if(v_comandos[i] == "Print"){
+            for(auto clave : mapa){
+                set<string> eventos = clave.second;
+                for(auto valor : eventos){
+                    cout << clave.first << " : " << valor << endl;
+                }
             }
-            if(hy_año >= 2){ //¿los guiones son mayor a 2? YES: el formato es incorrecto y sale del for
-                cout << "Wrong date format: " << fecha << endl;
-                s_año = "";
-                v_fecha.clear();
-                break;
-            } else { //NO: se reescribe el año
-                s_año += fecha[i];
-                if(s_año == "-" || fecha[i] == '+'){ //¿el año es igual a '-' o el caracter donde estamos es igual a '+'? YES: vaya a repetir el for
-                    if(fecha[i] == '+'){ //¿el caracter donde estamos es igual a '+'? YES: se borra el + de la string año, y recién se va a repetir el for
-                        s_año.erase(s_año.size() - 1);
-                    }
+        } else if(v_comandos[i] == "Find"){
+            set<string> eventos = mapa[fecha];
+            for (const auto& e : eventos) {
+                cout << e << endl;
+            }
+        } else if(comando == "Del"){
+            
+        }
+    }
+    return 0;
+}
+
+vector<string> separar_input(string& input){
+    string s_input;
+    vector<string> v_input;
+    for(int i = 0; i < input.size(); ++i){
+        if(input[i] == ' '){
+            if(!s_input.empty()){
+                v_input.push_back(s_input);
+                s_input = "";
+            }
+        } else{
+            s_input += input[i];
+        }
+    }
+    if(!s_input.empty()){ //Se agrega el ultimo elemento
+        v_input.push_back(s_input);
+        s_input = ""; //se limpia s_input una vez guardado todo el input en el vector v_input, para cuando venga la siguiente linea de comando
+    }
+    return v_input;
+}
+
+bool validar_fecha(string& fecha){
+//AÑO: for para reescribirlo o determinar si el formato es incorrecto 
+    string s_año = "";
+    int hy_año = 0;
+    int i_año = 0;
+    for(int i = 0; i < fecha.size(); ++i){
+        if(fecha[i] == '-'){
+            ++hy_año;
+        }
+        if(hy_año >= 2){
+            cout << "Wrong date format: " << fecha << endl;
+            v_fecha.clear();
+            return false;
+        } else {
+            s_año += fecha[i];
+            if(s_año == "-" || fecha[i] == '+'){
+                if(fecha[i] == '+'){
+                    s_año.erase(s_año.size() - 1);
+                }
+                continue;
+            } else {
+                if(fecha[i + 1] == '-'){
+                    v_fecha.push_back(stoi(s_año));
+                    i_año = i;
+                    break;   
+                } else {
                     continue;
-                } else { //NO: veamos si terminamos de reescribir el año o no..
-                    if(fecha[i + 1] == '-'){ //¿el siguiente caracter es '-'? YES: guardamos en un vector el valor del año, guardamos el valor de i en otra variable y sale del for porque terminamos de reescribir el año
-                        v_fecha.push_back(stoi(s_año));
-                        i_año = i;
-                        break;   
-                    } else { //NO: vaya a repetir el for, porque no terminamos de reescribir el año
-                        continue;
-                    }
                 }
             }
         }
-        if(s_año.empty()){ //¿Esta vacía la string del año? YES: i_año es igual al tamaño de la fecha porque significa que el formato era incorrecto, entonces no necesitamos entrar el loop del mes
-            i_año = fecha.size();
-        } //NO: se procede a procesar el mes
-
+    }
+//MES y DIA: for para reescribirlo o determinar si el formato es incorrecto
         string s_mes = "";
         int hy_mes = 0;
         for(i_año += 1; i_año < fecha.size(); ++i_año){
@@ -73,12 +163,11 @@ int main(){
             }
             if(hy_mes >= 3 || (hy_mes == 2 && fecha[i_año + 1] == '+')){
                 cout << "Wrong date format: " << fecha << endl;
-                s_mes = "";
                 v_fecha.clear();
-                break;
+                return false;
             } else {
                 s_mes += fecha[i_año];
-                if(fecha[i_año] == '-'){ //para 1-1
+                if(fecha[i_año] == '-'){
                     if(hy_mes == 1){
                         s_mes = "";
                         continue;   
@@ -94,58 +183,37 @@ int main(){
                 }
             }
         }
-        if(v_fecha.size() != 3){
-            cout << "Wrong date format: " << fecha << endl;
-            break;
-        }
         
-        //la fecha esta guardada en un vector de enteros, ahora hay que comprobar la validez del mes y del día
+        if(v_fecha.size() != 3){ //una vez guardados los valores de fecha en v_fecha, si no tiene exactamente el formato AAAA-MM-DD, se muestra WRONG
+            cout << "Wrong date format: " << fecha << endl;
+            return false;
+        }
+        FECHA f;
         f.año = v_fecha[0];
         f.mes = v_fecha[1];
         f.dia = v_fecha[2];
-        if(f.mes < 1 && f.mes > 12){
-            cout << "Month value invalid: " << f.mes << endl;
+        if(comprobar_mes(f.mes) == false) {
+            cout << "Month value is invalid: " + to_string(f.mes) << endl;
+            return false;
         }
-        if (f.dia < 1 && f.dia > 31){
-            cout << "Day value invalid: " << f.dia << endl;
+        if(comprobar_dia(f.dia) == false) {
+        cout << "Day value is invalid: " + to_string(f.dia) << endl;
+            return false;
         }
+        
+    return true;  
+}
 
-        if(comando == "Find"){
-            comandos.push_back(comando);
-            continue;
-        }
-
-        cin >> evento;
-
-//Función ADD
-        if(comando == "Add"){
-            mapa[fecha].insert(evento);
-        } else if(comando == "Del"){
-            comandos.push_back(comando);
-            continue;
-        }
-
+bool comprobar_mes(int mes){
+    if(mes > 0 && mes <= 12){
+        return true;
     }
+    return false;
+}
 
-//Para imprimir lo necesario después de haber sido ingresado "exit"    
-    cout << comandos.size() << endl; //el tamaño es 1 pero el indice es 0
-    for(int i = 0; i < comandos.size(); ++i){
-        if(comandos[i] == "Print"){
-            for(auto clave : mapa){
-                set<string> eventos = clave.second;
-                for(auto valor : eventos){
-                    cout << clave.first << " : " << valor << endl;
-                }
-            }
-        } else if(comandos[i] == "Find"){
-            set<string> eventos = mapa[fecha];
-            for (const auto& e : eventos) {
-                cout << e << endl;
-            }
-        } else if(comando == "Del"){
-            
-        }
+bool comprobar_dia(int dia){
+    if(dia > 0 && dia <= 31){
+        return true;
     }
-
-    return 0;  
+    return false;
 }

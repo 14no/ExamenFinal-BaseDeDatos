@@ -75,6 +75,7 @@ FUNCIONES:
 - Camila Alison Catorceno Orellana
 
 ## Herramientas utilizadas
-- VisualStudioCode
-- Programiz C++
-- Github
+Se mencionan todas las herramientas utilizadas de manera clara y se proporciona una explicación completa de su función y relevancia para el proyecto.
+- VisualStudioCode: porque es el editor de texto que se utiliza en el examen, por lo que se debe comprobar que el código corra en el mismo. Además para hacer la modularidad y subir los archivos al respositorio de github.
+- Programiz C++: para poder hacer la pruebas del código más rápido ya que en el compilador de VisualStudioCode se deben hacer más comandos para lograr esto.
+- Github: para tener un registro de los commits, además de tener un lugar fijo donde guardar nuestros avances.
