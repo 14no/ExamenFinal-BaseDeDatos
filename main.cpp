@@ -8,6 +8,8 @@ int main() {
     vector<string> v_comandos;
     map<string, set<string>> mapa;
     
+    vector<string> fecha_Find;
+    vector<int> v_fecha;
 while(true){
     getline(cin, input);
     if(input == "exit") break;
@@ -17,7 +19,7 @@ while(true){
 
 //Según el comando:    
     comando = v_input[0];
-    if(comando == "Add"){
+    if(comando == "Add"){ //función ADD
         fecha = v_input[1];
         if(!validar_fecha(fecha)){
             break;
@@ -25,7 +27,7 @@ while(true){
         evento = v_input[2];
         mapa[fecha].insert(evento);
         v_input.clear();
-    } else if(comando == "Find"){
+    } else if(comando == "Find"){ //función FIND
         v_comandos.push_back(comando);
         fecha = v_input[1];
         if(!validar_fecha(fecha)){
@@ -40,10 +42,11 @@ while(true){
         if(!validar_fecha(fecha)){
             break;
         }
-        if(v_input.size() == 2){ //fundion del
+        if(v_input.size() == 2){ //función DEL
             mapa.erase(fecha);
+            cout << "Deleted N events" << endl;
         } else {
-            evento = v_input[2]; //funcion del_one
+            evento = v_input[2]; //función DEL_ONE
             if(mapa.count(fecha)){
                 if(mapa[fecha].erase(evento)){
                     cout << "Deleted successfully" << endl;
@@ -56,7 +59,7 @@ while(true){
             }
         }
         v_input.clear();
-    } else if(comando == "Print"){
+    } else if(comando == "Print"){ //función PRINT
         v_comandos.push_back(comando);
         v_input.clear();
     } else {

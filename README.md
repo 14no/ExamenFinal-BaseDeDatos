@@ -1,9 +1,12 @@
 # PROYECTO FINAL
 
-## El problema
+## Estructura de repositorio
+Trabajamos en respositorios individuales, por lo que no fue necesario crear otras ramas y fue utilizado solo la rama main en ambos casos. En esta rama guardamos todo lo necesario, por un lado en el READ.ME se encuentra todo lo requerido por el docente con respecto a la documentación y con respecto al código se tiene los archivos cpps y headers correspondientes.
 
+## Problema
+El problema requiere diseñar un programa en C++ para gestionar una base de datos de eventos asociados a fechas específicas, permitiendo la inserción, eliminación, búsqueda e impresión de eventos a través de comandos introducidos por el usuario en la entrada estándar. Las fechas deben seguir el formato AAAA-MM-DD, y los eventos deben ser cadenas sin espacios. Los comandos soportados son agregar evento (Add Fecha Evento), eliminar evento (Del Fecha Evento), eliminar todos los eventos en una fecha (Del Fecha), buscar eventos en una fecha (Find Fecha), e imprimir todos los eventos (Print). Se deben validar las fechas y comandos, manejando errores como formato incorrecto de la fecha, meses fuera del rango 1-12 y días fuera del rango 1-31, proporcionando mensajes específicos para errores de formato y rango.
 
-## Comparativa de base de datos existentes:
+## Comparativa de base de datos existentes
 Los principales motores de bases de datos que existen se dividen en dos campos:
 
 ### 1. SQL / Relacional:
@@ -51,13 +54,10 @@ Existen otros tipos de bases de datos noSQL, sin embargo estás son las principa
 
 Fuente: https://sedici.unlp.edu.ar/bitstream/handle/10915/91403/Documento_completo.pdf?sequence=1&isAllowed=y
 
-## Justificacion de este nuevo desarrollo
-La implementación de este nuevo modelo de bases de datos es  
+## Justificacion
+Esta propuesta de un nuevo modelo de base de datos surge a partir de la necesidad de sencillez en las funciones que cumple la misma. Debido a que se requiere un procesamiento específico, es decir el de almacenar eventos en una fecha determinada, no le es necesario al usuario final todas las otras funcionalidades que ofrecen modelos más complejos, como los detallados arriba en la comparativa de bases de datos existentes. Entonces serían en todo caso funcionalidades no utilizadas para el problema que nos es planteado, porque solo se requiere del procesamiento de cuatro comandos y el manejo de ciertos errores entrada, por lo que este nuevo modelo es lo más adecuado para solventar el problema planteado. 
 
-## Estructura de repositorio
-Trabajamos en respositorios individuales, por lo que no fue necesario crear otras ramas. Aún así ambas solo utilizamos la rama main para guardar lo necesario: el documento READ.ME y los archivos cpps y headers para el código.
-
-## Descripcion de las estructuras y funciones
+## Descripcion de estructuras y funciones
 ESTRUCTURAS:
 - Fecha: esta estructura declara tres variables enteras de nombre: año, mes y dia respectivamente.
 
@@ -65,7 +65,7 @@ FUNCIONES:
 - Add:
 - Find:
 - Del:
-- Print: Se imprimen todas las fechas con los eventos que tengan almacenados en el set.
+- Print:
 
 ## Diagrama de flujos o Pseudocodigo. Debe estar embebido como imagen en le  README y dando una ligera explicacion de la imagen.
 
@@ -74,8 +74,11 @@ FUNCIONES:
 - Yannine Mary Saavedra Poma
 - Camila Alison Catorceno Orellana
 
+Fuente para la investigación: https://sedici.unlp.edu.ar/bitstream/handle/10915/91403/Documento_completo.pdf?sequence=1&isAllowed=y
+
 ## Herramientas utilizadas
-Se mencionan todas las herramientas utilizadas de manera clara y se proporciona una explicación completa de su función y relevancia para el proyecto.
-- VisualStudioCode: porque es el editor de texto que se utiliza en el examen, por lo que se debe comprobar que el código corra en el mismo. Además para hacer la modularidad y subir los archivos al respositorio de github.
-- Programiz C++: para poder hacer la pruebas del código más rápido ya que en el compilador de VisualStudioCode se deben hacer más comandos para lograr esto.
-- Github: para tener un registro de los commits, además de tener un lugar fijo donde guardar nuestros avances.
+- VisualStudioCode: es la herramienta utilizada para compilar el código el día del examen, por lo que su uso es indispensable a la hora de desarrollar el proyecto porque se debe verificar que compile correctamente en todo momento. Además es el medio por el cual subimos los avanzado del código al repositorio del github, para cumplir con los commits requeridos.
+
+- Programiz C++: es la herramienta que más utilizamos a lo largo del desarrollo porque ofrece una forma de compilar más rápida y sencilla a comparación del VSCode. De esta manera optimizamos más el tiempo al momento de ir probando las distintas lógicas para abordar el problema.
+
+- Github: ofrece un lugar seguro para guardar el desarrollo de un código y cualquier tipo de información en general, por lo que su uso fue indispensable porque de esta manera teniamos acceso a versiones anteriores que podiamos consultar de ser necesario.

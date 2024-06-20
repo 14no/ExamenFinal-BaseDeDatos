@@ -9,10 +9,6 @@ struct FECHA{
     int mes;
     int dia;
 };
-//variables globales:
-    vector<int> v_fecha;
-    FECHA f;
-    vector<string> fecha_Find;
 
 //funciones:
 vector<string> separar_input(string& input);
