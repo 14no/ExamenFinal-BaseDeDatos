@@ -65,7 +65,7 @@ int main() {
     }
 
 //PRINT:
-    else if(comando == "Print"){ //función PRINT
+    else if(comando == "Print"){
         v_comandos.push_back(comando);
         v_input.clear();
     }
