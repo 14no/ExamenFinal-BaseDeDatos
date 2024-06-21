@@ -1,5 +1,6 @@
 #include "funciones.h"
-
+//Variable global:
+FECHA f;
 bool validar_fecha(string& fecha){
 //AÑO: for para reescribirlo o determinar si el formato es incorrecto 
     string s_año = "";
@@ -65,7 +66,6 @@ bool validar_fecha(string& fecha){
         cout << "Wrong date format: " << fecha << endl;
         return false; //Termina
     }
-    FECHA f;
     f.año = v_fecha[0];
     f.mes = v_fecha[1];
     f.dia = v_fecha[2];
