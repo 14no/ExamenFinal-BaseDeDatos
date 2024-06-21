@@ -13,7 +13,7 @@ bool validar_fecha(string& fecha){
         if(hy_año >= 2){
             cout << "Wrong date format: " << fecha << endl;
             v_fecha.clear();
-            return false;
+            return false; //Termina
         } else {
             s_año += fecha[i];
             if(s_año == "-" || fecha[i] == '+'){
@@ -42,7 +42,7 @@ bool validar_fecha(string& fecha){
         if(hy_mes >= 3 || (hy_mes == 2 && fecha[i_año + 1] == '+')){
             cout << "Wrong date format: " << fecha << endl;
             v_fecha.clear();
-            return false;
+            return false; //Termina
         } else {
             s_mes += fecha[i_año];
             if(fecha[i_año] == '-'){
@@ -63,7 +63,7 @@ bool validar_fecha(string& fecha){
     }
     if(v_fecha.size() != 3){
         cout << "Wrong date format: " << fecha << endl;
-        return false;
+        return false; //Termina
     }
     FECHA f;
     f.año = v_fecha[0];
@@ -71,14 +71,14 @@ bool validar_fecha(string& fecha){
     f.dia = v_fecha[2];
     if(comprobar_mes(f.mes) == false) {
         cout << "Month value is invalid: " + to_string(f.mes) << endl;
-        return false;
+        return false; //Termina
     }
     if(comprobar_dia(f.dia) == false) {
         cout << "Day value is invalid: " + to_string(f.dia) << endl;
-        return false;
+        return false; //Termina
     }
     v_fecha.clear();
-    return true;  
+    return true;  //Termina, pero el formato es correcto.
 }
 
 bool comprobar_mes(int mes){

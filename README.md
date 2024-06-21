@@ -6,7 +6,7 @@ Trabajamos en respositorios individuales, por lo que no fue necesario crear otra
 ## Problema
 El problema requiere diseñar un programa en C++ para gestionar una base de datos de eventos asociados a fechas específicas, permitiendo la inserción, eliminación, búsqueda e impresión de eventos a través de comandos introducidos por el usuario en la entrada estándar. Las fechas deben seguir el formato AAAA-MM-DD, y los eventos deben ser cadenas sin espacios. Los comandos soportados son agregar evento (Add Fecha Evento), eliminar evento (Del Fecha Evento), eliminar todos los eventos en una fecha (Del Fecha), buscar eventos en una fecha (Find Fecha), e imprimir todos los eventos (Print). Se deben validar las fechas y comandos, manejando errores como formato incorrecto de la fecha, meses fuera del rango 1-12 y días fuera del rango 1-31, proporcionando mensajes específicos para errores de formato y rango.
 
-## Comparativa de base de datos existentes
+## Comparativa de bases de datos existentes
 Los principales motores de bases de datos que existen se dividen en dos campos:
 
 ### 1. SQL / Relacional:
@@ -62,13 +62,33 @@ ESTRUCTURAS:
 - Fecha: esta estructura declara tres variables enteras de nombre: año, mes y dia respectivamente.
 
 FUNCIONES:
-- Add:
-- Find:
-- Del:
-- Print:
+- separar_input: Un bucle for para reescribir el input hasta encontrar un espacio porque significa que terminamos de reescribir el comando o bien la fecha y se los guarda en un vector. Sin embargo la ultima palabra no cuenta con un espacio después, por lo tanto se lo guarda después del loop. Por ejemplo: Si tenemos la entrada "Print", se reescribiría el comando en el for pero se lo guardaría al salir del bucle.
+
+- validar_fecha: Dos bucles for para reescribir la fecha. En el primero se reescribe el año y la función termina si esta en formato incorrecto, de lo contrario se lo guarda en un vector. En el segundo es la misma dinámica solo que con el mes y el dia. Luego si la fecha no esta en formato año, mes y dia la función termina. De lo contrario sigue para verificar los valores del mes y dia si no estan en el rango aceptado termina la función, de lo contrario nuestra fecha paso todas las pruebas y devuelve true. Esta función es utilizada con todos los comandos que requieren de una fecha en la entrada, es decir todos menos el comando Print.
+
+- comprobar_mes: Verifica que el mes este entre 1 y 12.
+- comprobar_dia: Verifica que el dia este entre 1 y 31, estas dos funciones de verificación de rango son utilizados solo si en la función validar_fecha se pasaron todos los filtros de formato. Por ejemplo: si se tiene "1-1--1" en la entrada, esta fecha tiene formato correcto pero el dia es negativo (-1), por lo tanto si se llegaría a utilizar la función comprobar_dia.
+
+- find: Un bucle for para imprimir todos los eventos de la fecha indicada en esa linea de comando. Un caso de uso de esta función es cuando se ingreso en comando "Find" en la entrada
+
+- print: Un bucle for para ir iterando sobre la fecha del mapa y otro dentro para ir iterando e imprimiendo los eventos relacionados a esa fecha, al terminar se va a la siguiente fecha y se repite el proceso hasta imprimir toda nuestra base de datos. (En esta función queriamos hacer llamado de la función format_fecha_print, pero al intentar modificar la fecha que se encontraba en la clave del mapa, nos salía error. Otra opción era hacer el formateo cuando se agregarán eventos (comando Add), porque ahí se tiene a la fecha en formato string y se tiene acceso a todas las fechas de la base de datos, pero no pudimos hacer la modificación antes del examen).
+
+- format_fecha_print: Modificar el formato de la fecha si es necesario a AAAA-MM-DD solo para el comando Print. Sin embargo, no tenemos ejemplos de uso ya que en ningún momento en código presentado se hace llamada a esta función.
 
 ## Diagrama de flujos o Pseudocodigo. Debe estar embebido como imagen en le  README y dando una ligera explicacion de la imagen.
+Diagrama del MAIN: es donde se procesan todas las entradas y sigue la lógica de tal forma que se ingresa solo una string como linea de comando, se divide la misma y según el comando se va llamando a las funciones necesarias para la misma. Al terminar de recibir las entradas se imprime lo necesario con respecto a Find y Print ya que no conseguimos que Del se imprima luego de recibir todas las lineas de comando.
 
+[imagen](diagramas/diagrama_MAIN.png)
+
+Diagrama de FUNCIONES: explicadas en el subtítulo de arriba
+- separar_input: ()
+- format_fecha_print:
+- find:
+- print:
+
+Diagrama de VALIDAR FECHA: explicadas en el subtítulo de arriba
+- validar_fecha:
+- comprobar_mes y comprobar_dia:
 
 ## Creditos
 - Yannine Mary Saavedra Poma

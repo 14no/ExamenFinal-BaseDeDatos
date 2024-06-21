@@ -4,16 +4,16 @@ vector<string> separar_input(string& input){
     string s_input;
     vector<string> v_input;
     for(int i = 0; i < input.size(); ++i){
-        if(input[i] == ' '){
+        if(input[i] == ' '){ //¿Es un espacio? YES: guarda la palabra en el vector
             if(!s_input.empty()){
                 v_input.push_back(s_input);
                 s_input = "";
             }
-        } else{
+        } else { //NO: sigue reescribiendo el input
             s_input += input[i];
         }
     }
-    if(!s_input.empty()){ //Se agrega el ultimo elemento
+    if(!s_input.empty()){ //Se agrega la ultima palabra
         v_input.push_back(s_input);
         s_input = "";
     }
@@ -22,7 +22,7 @@ vector<string> separar_input(string& input){
 
 void find(vector<string> fecha_Find, map<string, set<string>> mapa){
     int i = 0;
-    int contador = 0;
+    int contador = 0; //Se queria imprimir la fecha indicada en esa linea de comando
     for(i += contador; i < fecha_Find.size(); ++i){
         set<string> eventos = mapa[fecha_Find[i]];
         for(auto& valor : eventos){
